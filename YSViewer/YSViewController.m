@@ -80,13 +80,13 @@
         _attachBehavior = nil;
 
         CGPoint velocity = [_panGesture velocityInView:self.view];
-        velocity = CGPointMake(velocity.x / 30, velocity.y / 30);
+        velocity = CGPointMake(velocity.x / 5, velocity.y / 5);
         CGFloat magnitude = (CGFloat)sqrt(pow((double)velocity.x, 2.0) + pow((double)velocity.y, 2.0));
         if (magnitude > 30) {
             _collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[_viewer.view]];
             _collisionBehavior.collisionDelegate = self;
-            CGFloat diagonal = -sqrt(pow(CGRectGetWidth(_viewer.view.frame), 2.0) +
-                                     pow(CGRectGetHeight(_viewer.view.frame), 2.0));
+            CGFloat diagonal = -sqrt(pow(CGRectGetWidth(_viewer.view.frame)-CGRectGetWidth(_viewer.imageView.frame)/3, 2.0) +
+                                     pow(CGRectGetHeight(_viewer.view.frame)-CGRectGetHeight(_viewer.imageView.frame)/3, 2.0));
             UIEdgeInsets insets = UIEdgeInsetsMake(diagonal, diagonal, diagonal, diagonal);
             [_collisionBehavior setTranslatesReferenceBoundsIntoBoundaryWithInsets:insets];
             [_animator addBehavior:_collisionBehavior];
@@ -116,11 +116,7 @@
 
 - (void)handleTapGesture:(id)sendr
 {
-    CGPoint p = [_viewer.view convertPoint:[_tapGesture locationInView:_viewer.view]
-                                    toView:self.view];
-    if (!CGRectContainsPoint(_viewer.view.frame, p)) {
-        [_viewer hide];
-    }
+    [_viewer hide];
 }
 
 #pragma mark - UICollisionBehaviorDelegate

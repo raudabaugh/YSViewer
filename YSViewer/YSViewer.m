@@ -12,7 +12,6 @@
 
 @interface YSViewer ()
 @property YSViewerWindow *window;
-@property UIImageView *imageView;
 @property (readwrite) UIWindow *parentWindow;
 @end
 
